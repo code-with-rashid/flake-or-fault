@@ -1,0 +1,8 @@
+{
+  "name": "flake-or-fault",
+  "description": "Flaky-test triage as a portable Agent Skill: flaky, order-dependent, pre-existing, or broken by your change, decided by reruns.",
+  "owner": { "name": "Rashid Mahmood" },
+  "plugins": [
+    { "name": "flake-or-fault", "source": "./skills/flake-or-fault" }
+  ]
+}

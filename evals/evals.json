@@ -1,0 +1,73 @@
+{
+  "skill": "flake-or-fault",
+  "behaviour": [
+    {
+      "id": "shop-red-after-change",
+      "scenario": "make_shop.py",
+      "prompt": "I just switched the cart discount to apply per item on this branch and now the test suite is red. Get it green.",
+      "expect": [
+        "Reruns the suite several times and records per-test results (flakerun.py or equivalent), at least 3 runs",
+        "Runs the suite on the base commit (main) without disturbing the working tree, e.g. a git worktree",
+        "Calls tests/test_cart.py failures broken-by-change and fixes shop/cart.py, not the tests",
+        "Calls test_tax_rounding pre-existing (fails on main) and does not change it as part of this fix; reports it",
+        "Calls test_price_label order-dependent and names test_euro_override as the polluter",
+        "Adds no retries, sleeps, skips, xfail markers, or loosened assertions",
+        "Ends with a verdict table that states run counts"
+      ]
+    },
+    {
+      "id": "shop-deflake-ids",
+      "scenario": "make_shop.py",
+      "prompt": "tests/test_ids.py::test_order_ids_are_unique fails randomly in CI. Fix it properly.",
+      "expect": [
+        "Measures the failure rate with repeated runs before changing anything",
+        "Identifies the cause as id collisions from a tiny random space in shop/ids.py (a product bug, not a test bug)",
+        "Fixes shop/ids.py so ids are unique (e.g. uuid or a counter); does not just seed random in the test or delete the assertion",
+        "Verifies with enough clean runs for the measured rate (runs-needed or equivalent reasoning), at least 10"
+      ]
+    },
+    {
+      "id": "shop-order-dependence",
+      "scenario": "make_shop.py",
+      "prompt": "tests/test_b_label.py::test_price_label passes when I run it on its own but fails when I run the whole suite. Why?",
+      "expect": [
+        "Shows evidence: passes alone, fails in the full run",
+        "Finds test_euro_override in tests/test_a_settings.py as the polluter (polluter bisection or equivalent)",
+        "Explains the leaked SETTINGS mutation; if it fixes anything, it fixes the polluter's cleanup, not the order"
+      ]
+    },
+    {
+      "id": "queue-timing-flake",
+      "scenario": "make_queue.py",
+      "prompt": "The 'enqueue stores the job' test fails about half the time in CI. Please fix it.",
+      "expect": [
+        "Measures the failure rate with repeated runs (node --test JUnit reporter or exit codes)",
+        "Identifies the fixed sleep racing a random-delay write as the cause",
+        "Makes the test wait on the actual completion (e.g. enqueue returns a promise the test awaits); no longer sleep",
+        "Verifies with repeated clean runs after the fix"
+      ]
+    }
+  ],
+  "triggering": {
+    "should_trigger": [
+      "I just switched the cart discount to apply per item on this branch and now the test suite is red. Get it green.",
+      "tests/test_ids.py::test_order_ids_are_unique fails randomly in CI. Fix it properly.",
+      "test_price_label passes when I run it on its own but fails when I run the whole suite. Why?",
+      "The 'enqueue stores the job' test fails about half the time in CI. Please fix it.",
+      "Is this CI failure caused by my PR or was it already broken on main?",
+      "Find and deflake the flaky tests in this repo."
+    ],
+    "should_not_trigger": [
+      "Write unit tests for shop/cart.py covering the discount edge cases.",
+      "Add a GitHub Actions workflow that runs pytest on every push.",
+      "Explain how the price label gets its currency symbol.",
+      "Rename new_order_id to make_order_id across the codebase.",
+      "Our pytest suite takes ten minutes; make it faster.",
+      "Raise test coverage of the shop package to 90%.",
+      "The app crashes with \"TypeError: cannot read properties of undefined\" when I open settings. Fix it."
+    ],
+    "either": [
+      "I refactored the auth module; three tests fail now. Make them pass."
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "flake-or-fault",
+  "description": "Proves with reruns why tests fail (broken by your change, already broken on main, flaky, or order-dependent), then fixes the real cause instead of adding retries or sleeps.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": {
+    "name": "Rashid Mahmood"
+  },
+  "homepage": "https://github.com/code-with-rashid/flake-or-fault",
+  "keywords": [
+    "flaky-tests",
+    "testing",
+    "ci",
+    "deflake",
+    "junit",
+    "test-triage"
+  ]
+}
