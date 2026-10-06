@@ -20,6 +20,7 @@ flaky runner, stale-result handling, polluter bisection, Windows path handling).
 | shop-red-after-change | 7/7 | 10 head + 10 base runs in a worktree; fixed `shop/cart.py`, not the tests; `test_tax_rounding` reported as pre-existing; `test_price_label` order-dependent with `test_euro_override` found by `polluter`; flaky id test reported (3/10 head, 4/10 base); no retries or skips; verdict table with run counts |
 | shop-deflake-ids | 4/4 | measured 9/30 and 8/30; product bug in `shop/ids.py` fixed with `uuid4`, test unchanged; `runs-needed` = 9, verified 30/30 |
 | shop-order-dependence | 3/3 | 0/5 full-suite vs 5/5 alone; polluter bisected; fixed the polluter with `monkeypatch.setitem`, 10/10 after |
+| shop-red-after-change (re-run on the final SKILL.md) | 7/7 | fixed only `cart.py`; first sentence says the suite is still not green and why; all three remaining failures reported with base/isolated evidence and the polluter |
 | queue-timing-flake | 4/4 | 9/20 failures measured with the node:test JUnit reporter; `enqueue` now returns a promise the test awaits; 50/50 clean, plus 20/20 under CPU load |
 
 ## Behaviour on a smaller model (Haiku), shop-red-after-change
