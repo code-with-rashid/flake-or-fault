@@ -90,7 +90,7 @@ cp -r /tmp/flake-or-fault/skills/flake-or-fault ~/.agents/skills/
 | Codex CLI | `~/.agents/skills/` | `.agents/skills/` |
 | Cursor | `~/.cursor/skills/` or `~/.agents/skills/` | `.cursor/skills/` or `.agents/skills/` |
 | Gemini CLI | `~/.gemini/skills/` or `~/.agents/skills/` | `.gemini/skills/` or `.agents/skills/` |
-| Antigravity CLI | `~/.gemini/skills/` | `.agents/skills/` |
+| Antigravity (CLI, App, IDE) | `~/.gemini/config/skills/` (the CLI also reads `~/.gemini/skills/`) | `.agents/skills/` |
 | GitHub Copilot | `~/.copilot/skills/` or `~/.agents/skills/` | `.github/skills/` or `.agents/skills/` |
 | Claude Code (manual) | `~/.claude/skills/` | `.claude/skills/` |
 
